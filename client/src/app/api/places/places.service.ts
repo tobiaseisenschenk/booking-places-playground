@@ -28,7 +28,7 @@ export class PlacesService {
     if (!google) {
       return;
     }
-    const loc = new google.maps.LatLng(48.1099776, 11.570380799999999);
+    const loc = new google.maps.LatLng(latitue, longitude);
     gmap = new google.maps.Map(document.getElementById('map'), {
       center: loc,
       zoom: 15

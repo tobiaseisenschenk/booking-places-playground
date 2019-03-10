@@ -1,7 +1,9 @@
 import * as mongoose from 'mongoose';
 
 export const BookingSchema = new mongoose.Schema({
-  id: Number,
-  name: String,
-  age: Number,
+  booking_id: Number,
+  place_name: String,
+  place_id: String,
+  place_rating: Number,
+  place_vicinity: String,
 });

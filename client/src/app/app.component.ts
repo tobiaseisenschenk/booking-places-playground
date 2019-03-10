@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlacesService } from './api/places.service';
+import { PlacesService } from './api/places/places.service';
 
 declare let google;
 
@@ -15,6 +15,7 @@ export class AppComponent {
     this.placesService.injectPlaces().subscribe(() => {
       this.placesService.getMyPlaces().subscribe((places: Array<any>) => {
         if (places.length > 0) {
+          console.log('my places', places);
           this.createMarkers(places);
         }
       });
@@ -47,5 +48,9 @@ export class AppComponent {
       bounds.extend(place.geometry.location);
     }
     gmap.fitBounds(bounds);
+  }
+
+  private bookPlace() {
+    // TODO: implement
   }
 }

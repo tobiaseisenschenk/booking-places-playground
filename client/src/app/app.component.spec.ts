@@ -2,19 +2,24 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PlacesService } from './api/places.service';
+import { PlacesService } from './api/places/places.service';
 import { of } from 'rxjs';
+import { BookingService } from './api/booking/booking.service';
 
 describe('AppComponent', () => {
   const placesServiceStub: Partial<PlacesService> = {
     injectPlaces: () => of(new Event('mock')),
     getMyPlaces: () => of([])
   };
+  const bookingServiceStub: Partial<BookingService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [{ provide: PlacesService, useValue: placesServiceStub }],
+      providers: [
+        { provide: PlacesService, useValue: placesServiceStub },
+        { provide: BookingService, useValue: bookingServiceStub }
+      ],
       declarations: [AppComponent]
     }).compileComponents();
   }));
