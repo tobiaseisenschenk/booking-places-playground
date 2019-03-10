@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { PlacesService } from './api/places/places.service';
+import {
+  MatBottomSheet,
+  MatBottomSheetConfig
+} from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from './utils/bottom-sheet/bottom-sheet.component';
 
 declare let google;
 
@@ -11,7 +16,10 @@ declare let google;
 export class AppComponent {
   title = 'booking-places';
 
-  constructor(private placesService: PlacesService) {
+  constructor(
+    private placesService: PlacesService,
+    private bottomSheet: MatBottomSheet
+  ) {
     this.placesService.injectPlaces().subscribe(() => {
       this.placesService.getMyPlaces().subscribe((places: Array<any>) => {
         if (places.length > 0) {
@@ -42,15 +50,21 @@ export class AppComponent {
         clickable: true,
         animation: google.maps.Animation.DROP
       });
-      google.maps.event.addListener(marker, 'click', () =>
-        console.log('clicked on ', marker)
-      );
+      google.maps.event.addListener(marker, 'click', () => {
+        console.log('clicked on ', marker);
+        this.bookPlace();
+      });
       bounds.extend(place.geometry.location);
     }
     gmap.fitBounds(bounds);
   }
 
   private bookPlace() {
-    // TODO: implement
+    const config = new MatBottomSheetConfig();
+    config.data = { name: 'sheraton' };
+    config.closeOnNavigation = true;
+    const ref = this.bottomSheet.open(BottomSheetComponent, config);
+    ref.dismiss();
+    ref.afterDismissed().subscribe(booked => console.log('booked', booked));
   }
 }
