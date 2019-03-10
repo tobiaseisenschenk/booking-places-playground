@@ -37,7 +37,7 @@ export class PlacesService {
     const request = {
       location: loc,
       radius: '500',
-      type: ['restaurant']
+      type: ['lodging']
     };
     const gpservice = new google.maps.places.PlacesService(gmap);
     const nearbySearchCallback = gpservice.nearbySearch.bind(gpservice);
