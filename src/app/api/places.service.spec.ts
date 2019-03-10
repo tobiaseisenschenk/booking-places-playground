@@ -1,27 +1,27 @@
-import { TestBed } from "@angular/core/testing";
+import { PlacesService } from './places.service';
+import { of } from 'rxjs';
 
-import { PlacesService } from "./places.service";
+describe('PlacesService', () => {
+  let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy };
+  let placesService: PlacesService;
 
-describe("PlacesService", () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
-
-  it("should be created", () => {
-    const service: PlacesService = TestBed.get(PlacesService);
-    expect(service).toBeTruthy();
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    placesService = new PlacesService(httpClientSpy as any);
   });
 
-  it("should return the current latitude and longitute", () => {
-    const service: PlacesService = TestBed.get(PlacesService);
-    service.getLatLong().subscribe(value => {
-      expect(value.lat).toBeDefined();
-      expect(value.long).toBeDefined();
-    });
+  it('should be created', () => {
+    expect(placesService).toBeTruthy();
   });
 
-  it("should return a list of nearby places", () => {
-    const service: PlacesService = TestBed.get(PlacesService);
-    service.getLPlaces().subscribe(value => {
-      expect(value.long).toBeDefined();
+  it('should return the current latitude and longitute', () => {
+    httpClientSpy.post.and.returnValue(
+      of({ location: { lat: 91283901, lng: 19827389 } })
+    );
+    placesService.getLatLng().subscribe(location => {
+      expect(location.lat).toBe(91283901);
+      expect(location.lng).toBe(19827389);
+      expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
     });
   });
 });
