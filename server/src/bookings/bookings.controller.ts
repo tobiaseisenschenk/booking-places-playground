@@ -1,7 +1,11 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { BookingService } from './booking.service';
+import { Booking } from './interfaces/booking.interface';
 
 @Controller('bookings')
 export class BookingsController {
+  constructor(private readonly bookingService: BookingService) {}
+
   @Get()
   findAll() {
     return 'This action returns all bookings';
@@ -13,7 +17,7 @@ export class BookingsController {
   }
 
   @Post()
-  create() {
-    return 'This action adds a new booking';
+  async create(@Body() createBooking: Booking) {
+    this.bookingService.create(createBooking);
   }
 }
