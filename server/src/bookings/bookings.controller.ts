@@ -8,7 +8,7 @@ export class BookingsController {
 
   @Get()
   findAll() {
-    return 'This action returns all bookings';
+    return this.bookingService.findAll();
   }
 
   @Get(':id')

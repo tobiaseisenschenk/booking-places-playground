@@ -13,7 +13,7 @@ export class BookingService {
 
   book(placeInfo: IBooking): Observable<IBooking> {
     return this.http
-      .post(`${environment.API_URL}`, placeInfo)
+      .post(`${environment.API_URL}bookings/`, placeInfo)
       .pipe(map(obj => obj as IBooking));
   }
 }

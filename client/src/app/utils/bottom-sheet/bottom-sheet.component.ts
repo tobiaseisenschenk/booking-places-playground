@@ -20,8 +20,7 @@ export class BottomSheetComponent {
   ) {}
 
   book() {
-    console.log('xxxxx', this.bottomSheetRef);
-    this.bottomSheetRef.dismiss();
+    this.bottomSheetRef.dismiss(true);
   }
 
   cancel() {
